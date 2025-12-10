@@ -20,5 +20,6 @@ int main() {
 
     // 生成 0.0 ~ 1.0 之间的随机浮点数
     double randomFloat = (double)rand() / RAND_MAX;
+    
     return 0;
 }
