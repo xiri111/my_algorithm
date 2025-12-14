@@ -4,6 +4,7 @@
 #include<algorithm>
 #include<climits>
 #include<cmath>
+#include<unordered_map>
 
 using namespace std;
 
@@ -69,9 +70,6 @@ int findTheDistanceValue(vector<int>& arr1, vector<int>& arr2, int d) {
     // return ans;
 
     //法三：排序+双指针
-    sort(arr1.begin(),arr1.end());
-    sort(arr2.begin(),arr2.end());
-    int ans=0;
 }
 
 //2389和有限的最长子序列
@@ -90,38 +88,99 @@ vector<int> answerQueries(vector<int>& nums, vector<int>& queries) {
     {
         int l=1,r=m;
         int len=0;
+        //二分查找：找到最后一个pefix[mid]<=queries[i]的位置
         while(l<=r)
         {
-            int mid=(r-l)/2+l;
-            if(prefix[mid]==queries[i])
+            int mid=l+(r-l)/2;
+            if(prefix[mid]<=queries[i])
             {
+                //当前mid满足条件，更新len，并尝试更大的mid
                 len=mid;
-                break;
-            }
-            else if(prefix[mid]>queries[i])
-            {
-                r=mid-1;
-                len=l;
+                l=mid+1;
             }
             else
             {
-                l=mid;
-                len=l;
+                //不满足条件，需要减小mid
+                r=mid-1;
             }
         }
         ans.push_back(len);
+        // //也可以直接使用upper_bound函数，找到第一个大于queries[i]的位置
+        // for(int query:queries)
+        // {
+        //     auto it = upper_bound(prefix.begin(),prefix.end(),query);
+        //     ans.push_back(it-prefix.begin()-1);
+        // }
     }        
     return ans;
 }
 
-int main()
+//1170比较字符串最小字母出现频次
+int fun(string s)
 {
-    vector<int> nums = {4,5,2,1};
-    vector<int> queries = {3,10,21};
-    vector<int> ans = answerQueries(nums,queries);
-    for(int num:ans){
-        cout<<num<<" ";
+    int minC = 'z'-'a';
+    unordered_map<char,int> hashmap;
+    for(int i=0;i<s.size();i++)
+    {
+        hashmap[s[i]]++;
+        minC=min(minC,s[i]-'a');
     }
-    cout<<endl;
-    return 0;
+    char targetC=minC+'a'; 
+    return hashmap[targetC];
+}
+
+vector<int> numSmallerByFrequency(vector<string>& queries, vector<string>& words) {
+    vector<int> ans;
+    int m=queries.size(),n=words.size();
+    //把queries和words转化为int型数组，转换关系为f(n);
+    vector<int> q_arr,w_arr;
+    for(int i=0;i<m;i++)
+    {
+        int q_num=fun(queries[i]);
+        q_arr.push_back(q_num);
+    }
+    for(int i=0;i<n;i++)
+    {
+        int w_num=fun(words[i]);
+        w_arr.push_back(w_num);
+    }
+    
+    sort(w_arr.begin(),w_arr.end());
+    for(int i=0;i<m;i++)
+    {
+        int num=0;
+        int l=0,r=n-1;
+        while(l<=r)
+        {
+            int mid=(r-l)/2+l;
+            if(w_arr[mid]>q_arr[i])
+            {
+                num=n-mid;
+                r=mid-1;
+            }
+            else
+            {   
+                l=mid+1;
+            }
+        }
+        ans.push_back(num);
+    }
+    return ans;
+}
+
+//2080区间内查询数字的频率
+class RangeFreqQuery {
+public:
+    RangeFreqQuery(vector<int>& arr) {
+        
+    }
+    
+    int query(int left, int right, int value) {
+        
+    }
+};
+
+//3488距离最小相等元素查询
+vector<int> solveQueries(vector<int>& nums, vector<int>& queries) {
+            
 }
