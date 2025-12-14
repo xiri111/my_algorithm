@@ -202,28 +202,47 @@ int trap(vector<int>& height) {
 
 //84柱状图中最大的矩形
 int largestRectangleArea(vector<int>& heights) {
-	//1.暴力解法
-	int ans=INT_MIN;
-	for(int i=0;i<heights.size();i++)
+	// //1.暴力解法
+	// int ans=INT_MIN;
+	// for(int i=0;i<heights.size();i++)
+	// {
+	// 	int cur=0;
+	// 	int left=i,right=i;
+	// 	//从0遍历到i，找i左边第一个比它小的数
+	// 	for(left;left>=0;left--)
+	// 	{	
+	// 		if(heights[left]<heights[i]) break;
+	// 	}
+	// 	left++;
+	// 	//从i遍历到heights.size()-1,找i右边第一个比它小的数
+	// 	for(right;right<heights.size()-1;right++)
+	// 	{
+	// 		if(heights[right]<heights[i]) break;
+	// 	}
+	// 	right--;
+	// 	cur=heights[i]*(right-left+1);
+	// 	ans=max(ans,cur);
+	// }
+	// return ans;
+
+	//2.单调栈
+	//我们想要求元素i左边第一个小于i的，以及右边第一个小于i的
+	int ans=0;
+	stack<int> st;
+	st.push(0);
+	//我们保证单调栈（从栈头到栈底是从大到小的
+	int n=heights.size();
+	for(int i=1;i<n;i++)
 	{
-		int cur=0;
-		int left=i,right=i;
-		//从0遍历到i，找i左边第一个比它小的数
-		for(left;left>=0;left--)
-		{	
-			if(heights[left]<heights[i]) break;
-		}
-		left++;
-		//从i遍历到heights.size()-1,找i右边第一个比它大的数
-		for(right;right<heights.size()-1;right++)
+		if(heights[i]>=heights[st.top()])
 		{
-			if(heights[right]<heights[i]) break;
+			st.push(i);
 		}
-		right--;
-		cur=heights[i]*(right-left+1);
-		ans=max(ans,cur);
+		else
+		{
+			
+		}
 	}
-	return ans;
 }
 
 int main()
