@@ -1,0 +1,72 @@
+1.什么情况下需要用到哨兵节点（dummy node）
+2.什么情况下，循环条件要写 while(node!=nullptr)
+什么情况下要写 while(node.next!=nullptr)
+
+一：遍历链表
+while(head)
+{
+    cout<<head->val<<" ";
+    head=head->next;
+}
+
+二：删除节点
+ListNode* dummy=new ListNode(0,head);
+ListNode* prev=dummy,* cur=head;
+
+while(cur)
+{
+    if(cur->val==val)
+    {
+        ListNode* toDelete = cur;
+        cur=cur->next;
+        prev->next=cur;
+        delete toDelete;//在断链前把要删的节点保存下来并delete
+    }
+    else
+    {
+        prev=cur;
+        cur=cur->next;
+    }
+}
+ListNode* result=dummy->next;
+delete dummy;
+return result;
+
+//补充：关于栈和堆
+栈（stack）自动创建，自动销毁，作用域一结束就没了
+堆（heap）手动new和delete，生命周期需要自己控制
+
+//stl中的binary_search,lower_bound,upper_bound,equal_range
+//前提：区间必须有序
+
+//第一个>=x在哪？返回迭代器
+lower_bound: 第一个不小于 value 的元素
+template<class ForwardIt, class T>
+ForwardIt lower_bound(ForwardIt first, ForwardIt last, const T& value);
+
+//第一个>x在哪？返回迭代器
+upper_bound: 第一个大于 value 的元素  
+template<class ForwardIt, class T>
+ForwardIt upper_bound(ForwardIt first, ForwardIt last, const T& value);
+
+//有没有x？返回bool
+binary_search: 是否存在等于 value 的元素
+template<class ForwardIt, class T>
+bool binary_search(ForwardIt first, ForwardIt last, const T& value);
+
+//
+equal_range: 返回 [lower_bound, upper_bound)
+template<class ForwardIt, class T>
+pair<ForwardIt, ForwardIt> equal_range(ForwardIt first, ForwardIt last, const T& value);
+
+
+lambda函数：写在代码里的匿名函数
+[capture](parameters)->return_type{
+    function_body
+}
+1.capture捕获列表
+//一些常见简写
+[=]捕获所有外部变量（值）
+[&]捕获所有外部变量（引用）
+2.parameters参数列表
+3.->返回类型（通常可以省）
