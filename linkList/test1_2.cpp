@@ -115,3 +115,39 @@ ListNode* deleteDuplicates(ListNode* head)
     }
     return dummy->next;
 }
+
+//237删除链表中的节点
+void deleteNode(ListNode* node)
+{
+
+}
+
+//1669合并两个链表
+ListNode* mergeInBetween(ListNode* list1, int a, int b, ListNode* list2) {
+    //创建虚拟头节点
+    ListNode* dummy=new ListNode(0,list1);
+    ListNode* prev_a=dummy;
+    ListNode* post_b=dummy;
+
+    //同时找到a-1 和 b+1的位置
+    for(int i=0;i<a;i++)
+    {
+        prev_a=prev_a->next;
+    }
+    for(int i=0;i<=b+1;i++)
+    {
+        post_b=post_b->next;
+    }
+
+    //把list2插入到prev_a和post_b之间
+    ListNode* node=list2;
+    while(node->next)
+    {
+        node=node->next;
+    }
+    prev_a->next=list2;
+    node->next=post_b;
+    
+    return dummy->next;
+}
+
