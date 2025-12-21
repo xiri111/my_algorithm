@@ -70,3 +70,45 @@ lambda函数：写在代码里的匿名函数
 [&]捕获所有外部变量（引用）
 2.parameters参数列表
 3.->返回类型（通常可以省）
+
+链表中交换两个节点的位置
+ListNode* swapNodes(ListNode* head,ListNode* a,ListNode* b)
+{
+    if(!head || !a || !b || a==b) return head;
+
+    ListNode* prevA=nullptr,* prevB=nullptr;
+
+    while(prevA->next!=a)
+    {
+        prevA=prevA->next;
+    }
+    while(prevB->next!=b)
+    {
+        prevB=prevB->next;
+    }
+    
+    //处理头节点情况
+    if(head==a) prevA=nullptr;
+    if(head==b) prevB=nullptr;
+
+    //如果a或b不在链表中
+    if((a!=head && !prevA)||(b!=head && !prevB))
+    {
+        return head;
+    }
+
+    //如果a是头
+    if(prevA) prevA->next=b;
+    else head=b;
+    
+    // 如果 b 是头
+    if (prevB) prevB->next = a;
+    else head = a;
+
+    // 交换 next
+    ListNode* temp = a->next;
+    a->next = b->next;
+    b->next = temp;
+
+    return head;
+}

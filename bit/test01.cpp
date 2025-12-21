@@ -9,7 +9,7 @@ using namespace std;
 //方法1:直接计算n中1的数量
 // static int bitCount(int n)
 // {
-//     int cnt=0;//计数器
+//     int cnt=0;//计s
 //     while(n>0) 
 //     {
 //         if((n&1) == 1 ) cnt++;
@@ -69,3 +69,4 @@ vector<int> sortByBits(vector<int>& arr) {
     });
     return arr;
 }
+

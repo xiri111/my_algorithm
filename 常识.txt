@@ -1,0 +1,8 @@
+1.a/b向上取整可以写成(a+b-1)/b，a和b均大于0
+
+2.注意pair<...>里面要写类型
+int a=1,b=1;
+vector<pair<int,int>> vec;
+vec.push_back({a,b});   //写法一
+vec.push_back(pair<int,int>(a,b));  //写法二
+vec.push_back(make_pair(index,head->val));  //写法三
