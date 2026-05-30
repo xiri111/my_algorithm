@@ -6,3 +6,7 @@ vector<pair<int,int>> vec;
 vec.push_back({a,b});   //写法一
 vec.push_back(pair<int,int>(a,b));  //写法二
 vec.push_back(make_pair(index,head->val));  //写法三
+
+3.C++中vector可以直接比较
+vector<int> ans1,ans2;
+return ans1==ans2;
